@@ -1,0 +1,33 @@
+{
+    "dependencies": [
+        {
+            "interfaces": "pallo\\library\\cli\\command\\Command", 
+            "class": "pallo\\cli\\command\\SessionCleanUpCommand",
+            "id": "session.clean"
+        },
+        {
+            "interfaces": "pallo\\library\\cli\\command\\Command", 
+            "class": "pallo\\cli\\command\\router\\RouterRegisterCommand",
+            "calls": ["setRouteContainerIO"],
+            "id": "router.register"
+        },
+        {
+            "interfaces": "pallo\\library\\cli\\command\\Command",
+            "class": "pallo\\cli\\command\\router\\RouterRouteCommand",
+            "calls": ["setRouter"],
+            "id": "router.route"
+        },
+        {
+            "interfaces": "pallo\\library\\cli\\command\\Command",
+            "class": "pallo\\cli\\command\\router\\RouterSearchCommand",
+            "calls": ["setRouter"],
+            "id": "router"
+        },
+        {
+            "interfaces": "pallo\\library\\cli\\command\\Command",
+            "class": "pallo\\cli\\command\\router\\RouterUnregisterCommand",
+            "calls": ["setRouteContainerIO"],
+            "id": "router.unregister"
+        }        
+    ]
+}
