@@ -7,6 +7,11 @@
         },
         {
             "interfaces": "pallo\\library\\cli\\command\\Command", 
+            "class": "pallo\\cli\\command\\AssetsDeployCommand",
+            "id": "assets.deploy"
+        },
+        {
+            "interfaces": "pallo\\library\\cli\\command\\Command", 
             "class": "pallo\\cli\\command\\router\\RouterRegisterCommand",
             "calls": ["setRouteContainerIO"],
             "id": "router.register"
