@@ -1,9 +1,9 @@
 <?php
 
-namespace pallo\cli\command;
+namespace ride\cli\command;
 
-use pallo\library\cli\command\AbstractCommand;
-use pallo\library\http\session\io\SessionIO;
+use ride\library\cli\command\AbstractCommand;
+use ride\library\http\session\io\SessionIO;
 
 /**
  * Command to clean up the invalidated sessions
@@ -12,13 +12,13 @@ class SessionCleanUpCommand extends AbstractCommand {
 
     /**
      * Instance of the Session I/O
-     * @var pallo\library\http\session\io\SessionIO
+     * @var ride\library\http\session\io\SessionIO
      */
     private $io;
 
     /**
      * Constructs a new session clean up command
-     * @param pallo\library\http\session\io\SessionIO $io
+     * @param ride\library\http\session\io\SessionIO $io
      * @return null
      */
     public function __construct(SessionIO $io) {

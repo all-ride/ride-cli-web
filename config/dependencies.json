@@ -1,36 +1,36 @@
 {
     "dependencies": [
         {
-            "interfaces": "pallo\\library\\cli\\command\\Command", 
-            "class": "pallo\\cli\\command\\SessionCleanUpCommand",
+            "interfaces": "ride\\library\\cli\\command\\Command", 
+            "class": "ride\\cli\\command\\SessionCleanUpCommand",
             "id": "session.clean"
         },
         {
-            "interfaces": "pallo\\library\\cli\\command\\Command", 
-            "class": "pallo\\cli\\command\\AssetsDeployCommand",
+            "interfaces": "ride\\library\\cli\\command\\Command", 
+            "class": "ride\\cli\\command\\AssetsDeployCommand",
             "id": "assets.deploy"
         },
         {
-            "interfaces": "pallo\\library\\cli\\command\\Command", 
-            "class": "pallo\\cli\\command\\router\\RouterRegisterCommand",
+            "interfaces": "ride\\library\\cli\\command\\Command", 
+            "class": "ride\\cli\\command\\router\\RouterRegisterCommand",
             "calls": ["setRouteContainerIO"],
             "id": "router.register"
         },
         {
-            "interfaces": "pallo\\library\\cli\\command\\Command",
-            "class": "pallo\\cli\\command\\router\\RouterRouteCommand",
+            "interfaces": "ride\\library\\cli\\command\\Command",
+            "class": "ride\\cli\\command\\router\\RouterRouteCommand",
             "calls": ["setRouter"],
             "id": "router.route"
         },
         {
-            "interfaces": "pallo\\library\\cli\\command\\Command",
-            "class": "pallo\\cli\\command\\router\\RouterSearchCommand",
+            "interfaces": "ride\\library\\cli\\command\\Command",
+            "class": "ride\\cli\\command\\router\\RouterSearchCommand",
             "calls": ["setRouter"],
             "id": "router"
         },
         {
-            "interfaces": "pallo\\library\\cli\\command\\Command",
-            "class": "pallo\\cli\\command\\router\\RouterUnregisterCommand",
+            "interfaces": "ride\\library\\cli\\command\\Command",
+            "class": "ride\\cli\\command\\router\\RouterUnregisterCommand",
             "calls": ["setRouteContainerIO"],
             "id": "router.unregister"
         }        

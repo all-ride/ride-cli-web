@@ -1,11 +1,11 @@
 <?php
 
-namespace pallo\cli\command\router;
+namespace ride\cli\command\router;
 
-use pallo\library\cli\command\AbstractCommand;
-use pallo\library\router\Route;
+use ride\library\cli\command\AbstractCommand;
+use ride\library\router\Route;
 
-use pallo\web\router\io\RouteContainerIO;
+use ride\web\router\io\RouteContainerIO;
 
 /**
  * Command to register a new route
@@ -28,7 +28,7 @@ class RouterRegisterCommand extends AbstractCommand {
 
     /**
      * Sets the route container IO
-     * @param pallo\web\router\io\RouteContainerIO $routeContainerIO
+     * @param ride\web\router\io\RouteContainerIO $routeContainerIO
      * @return null
      */
     public function setRouteContainerIO(RouteContainerIO $routeContainerIO) {

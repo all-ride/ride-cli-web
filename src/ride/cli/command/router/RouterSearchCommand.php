@@ -1,9 +1,9 @@
 <?php
 
-namespace pallo\cli\command\router;
+namespace ride\cli\command\router;
 
-use pallo\library\cli\command\AbstractCommand;
-use pallo\library\router\Router;
+use ride\library\cli\command\AbstractCommand;
+use ride\library\router\Router;
 
 /**
  * Command to search for routes
@@ -22,7 +22,7 @@ class RouterSearchCommand extends AbstractCommand {
 
     /**
      * Sets the router
-     * @param pallo\library\router\Router $router
+     * @param ride\library\router\Router $router
      */
     public function setRouter(Router $router) {
         $this->router = $router;
