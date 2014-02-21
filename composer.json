@@ -1,6 +1,6 @@
 {
-    "name": "pallo/cli-web",
-    "description": "Web commands for the Pallo CLI",
+    "name": "ride/cli-web",
+    "description": "Web commands for the Ride CLI",
     "license": "MIT",
     "version": "0.2.0",
     "authors": [
@@ -10,12 +10,12 @@
         }
     ],
     "require": {
-        "pallo/lib-cli": ">=0.1.0",
-        "pallo/lib-http": ">=0.3.0"
+        "ride/lib-cli": ">=0.1.0",
+        "ride/lib-http": ">=0.3.0"
     }, 
     "autoload": {
         "psr-0": {
-            "pallo\\cli\\command\\": ["src/"]
+            "ride\\cli\\command\\": ["src/"]
         }
     }
 }

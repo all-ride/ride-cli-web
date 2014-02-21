@@ -1,10 +1,10 @@
 <?php
 
-namespace pallo\cli\command\router;
+namespace ride\cli\command\router;
 
-use pallo\library\cli\command\AbstractCommand;
+use ride\library\cli\command\AbstractCommand;
 
-use pallo\web\router\io\RouteContainerIO;
+use ride\web\router\io\RouteContainerIO;
 
 /**
  * Command to unregister a route
@@ -23,7 +23,7 @@ class RouterUnregisterCommand extends AbstractCommand {
 
     /**
      * Sets the route container IO
-     * @param pallo\web\router\io\RouteContainerIO $routeContainerIO
+     * @param ride\web\router\io\RouteContainerIO $routeContainerIO
      * @return null
      */
     public function setRouteContainerIO(RouteContainerIO $routeContainerIO) {
