@@ -2,7 +2,7 @@
 
 namespace ride\cli\command\router;
 
-use ride\library\cli\command\AbstractCommand;
+use ride\cli\command\AbstractCommand;
 
 use ride\web\router\io\RouteContainerIO;
 
@@ -12,35 +12,25 @@ use ride\web\router\io\RouteContainerIO;
 class RouterUnregisterCommand extends AbstractCommand {
 
     /**
-     * Constructs a new route unregister command
+     * Initializes the command
      * @return null
      */
-    public function __construct() {
-        parent::__construct('router unregister', 'Unregister a route');
+    protected function initialize() {
+        $this->setDescription('Unregister a route');
 
         $this->addArgument('id', 'Id of the route');
     }
 
     /**
-     * Sets the route container IO
+     * Invokes the command
      * @param ride\web\router\io\RouteContainerIO $routeContainerIO
      * @return null
      */
-    public function setRouteContainerIO(RouteContainerIO $routeContainerIO) {
-        $this->routeContainerIO = $routeContainerIO;
-    }
+    public function invoke(RouteContainerIO $routeContainerIO, $id) {
+        $routeContainer = $routeContainerIO->getRouteContainer();
+        $routeContainer->removeRouteById($id);
 
-    /**
-     * Executes the command
-     * @return null
-     */
-    public function execute() {
-    	$id = $this->input->getArgument('id');
-
-    	$routeContainer = $this->routeContainerIO->getRouteContainer();
-    	$routeContainer->removeRouteById($id);
-
-    	$this->routeContainerIO->setRouteContainer($routeContainer);
+        $routeContainerIO->setRouteContainer($routeContainer);
     }
 
 }

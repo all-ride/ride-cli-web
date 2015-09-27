@@ -1,0 +1,34 @@
+{
+    "commands": [
+        {
+            "name": "assets deploy",
+            "aliases": "ad",
+            "class": "ride\\cli\\command\\AssetsDeployCommand"
+        },
+        {
+            "name": "router",
+            "aliases": "r",
+            "class": "ride\\cli\\command\\router\\RouterSearchCommand"
+        },
+        {
+            "name": "router add",
+            "aliases": "ra",
+            "class": "ride\\cli\\command\\router\\RouterRegisterCommand"
+        },
+        {
+            "name": "router delete",
+            "aliases": "rd",
+            "class": "ride\\cli\\command\\router\\RouterUnregisterCommand"
+        },
+        {
+            "name": "router route",
+            "aliases": "rr",
+            "class": "ride\\cli\\command\\router\\RouterRouteCommand"
+        },
+        {
+            "name": "session clean",
+            "aliases": "sc",
+            "class": "ride\\cli\\command\\SessionCleanUpCommand"
+        }
+    ]
+}

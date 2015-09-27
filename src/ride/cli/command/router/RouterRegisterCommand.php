@@ -2,7 +2,8 @@
 
 namespace ride\cli\command\router;
 
-use ride\library\cli\command\AbstractCommand;
+use ride\cli\command\AbstractCommand;
+
 use ride\library\router\Route;
 
 use ride\web\router\io\RouteContainerIO;
@@ -13,11 +14,11 @@ use ride\web\router\io\RouteContainerIO;
 class RouterRegisterCommand extends AbstractCommand {
 
     /**
-     * Constructs a new route register command
+     * Initializes the command
      * @return null
      */
-    public function __construct() {
-        parent::__construct('router register', 'Register a new route');
+    protected function initialize() {
+        $this->setDescription('Register a new route');
 
         $this->addArgument('path', 'Path of the route');
         $this->addArgument('controller', 'Class name of the controller');
@@ -27,37 +28,28 @@ class RouterRegisterCommand extends AbstractCommand {
     }
 
     /**
-     * Sets the route container IO
+     * Invokes the command
      * @param ride\web\router\io\RouteContainerIO $routeContainerIO
+     * @param string $path
+     * @param string $controller
+     * @param string $action
+     * @param string $id
+     * @param string $methods
      * @return null
      */
-    public function setRouteContainerIO(RouteContainerIO $routeContainerIO) {
-        $this->routeContainerIO = $routeContainerIO;
-    }
+    public function invoke(RouteContainerIO $routeContainerIO, $path, $controller, $action = 'indexAction', $id = null, $methods = null) {
+        $callback = array($controller, $action);
 
-    /**
-     * Executes the command
-     * @return null
-     */
-    public function execute() {
-    	$path = $this->input->getArgument('path');
-    	$controller = $this->input->getArgument('controller');
-    	$action = $this->input->getArgument('action', 'indexAction');
-    	$id = $this->input->getArgument('id');
-    	$allowedMethods = $this->input->getArgument('methods');
+        if ($methods) {
+            $methods = implode(',', $methods);
+        }
 
-    	$callback = array($controller, $action);
+        $route = new Route($path, $callback, $id, $methods);
 
-    	if ($allowedMethods) {
-    		$allowedMethods = implode(',', $allowedMethods);
-    	}
+        $routeContainer = $routeContainerIO->getRouteContainer();
+        $routeContainer->addRoute($route);
 
-    	$route = new Route($path, $callback, $id, $allowedMethods);
-
-    	$routeContainer = $this->routeContainerIO->getRouteContainer();
-    	$routeContainer->addRoute($route);
-
-    	$this->routeContainerIO->setRouteContainer($routeContainer);
+        $routeContainerIO->setRouteContainer($routeContainer);
     }
 
 }

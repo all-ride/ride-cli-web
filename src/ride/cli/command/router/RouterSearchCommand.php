@@ -2,7 +2,8 @@
 
 namespace ride\cli\command\router;
 
-use ride\library\cli\command\AbstractCommand;
+use ride\cli\command\AbstractCommand;
+
 use ride\library\router\Router;
 
 /**
@@ -11,31 +12,24 @@ use ride\library\router\Router;
 class RouterSearchCommand extends AbstractCommand {
 
     /**
-     * Constructs a new route search command
+     * Initializes the command
      * @return null
      */
-    public function __construct() {
-        parent::__construct('router', 'Show an overview of the defined routes');
+    protected function initialize() {
+        $this->setDescription('Show an overview of the defined routes');
 
         $this->addArgument('query', 'Query to search the routes', false, true);
     }
 
     /**
-     * Sets the router
-     * @param ride\library\router\Router $router
-     */
-    public function setRouter(Router $router) {
-        $this->router = $router;
-    }
-
-    /**
-     * Executes the command
+     * Invokes the command
+     * @param \ride\library\router\Router $router
+     * @param string $query
      * @return null
      */
-    public function execute() {
-        $routes = $this->router->getRouteContainer()->getRoutes();
+    public function invoke(Router $router, $query = null) {
+        $routes = $router->getRouteContainer()->getRoutes();
 
-        $query = $this->input->getArgument('query');
         if ($query) {
             foreach ($routes as $id => $route) {
                 if (stripos($route->getPath(), $query) !== false) {
@@ -49,7 +43,7 @@ class RouterSearchCommand extends AbstractCommand {
         ksort($routes);
 
         foreach ($routes as $route) {
-            $this->output->writeLine($route);
+            $this->output->writeLine($route . ' (' . $route->getId() . ')');
         }
     }
 
