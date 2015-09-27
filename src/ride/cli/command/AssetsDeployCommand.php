@@ -2,7 +2,6 @@
 
 namespace ride\cli\command;
 
-use ride\library\cli\command\AbstractCommand;
 use ride\library\system\file\browser\FileBrowser;
 
 /**
@@ -11,42 +10,34 @@ use ride\library\system\file\browser\FileBrowser;
 class AssetsDeployCommand extends AbstractCommand {
 
     /**
-     * Instance of the file browser
-     * @var ride\library\system\file\browser\FileBrowser
-     */
-    private $fileBrowser;
-
-    /**
-     * Constructs a new asset deploy command
-     * @param ride\library\system\file\browser\FileBrowser $fileBrowser
+     * Initializes the command
      * @return null
      */
-    public function __construct(FileBrowser $fileBrowser) {
-        parent::__construct('assets deploy', 'Deploys all public files from the modules');
+    protected function initialize() {
+        $this->setDescription('Deploys all public files from the modules');
 
         $this->addArgument('destination', 'Path of the destination, defaults to the actual public directory', false);
-
-        $this->fileBrowser = $fileBrowser;
     }
 
     /**
-     * Executes the command
+     * Invokes the command
+     * @param ride\library\system\file\browser\FileBrowser $fileBrowser
+     * @param string $destination
      * @return null
      */
-    public function execute() {
-        $destination = $this->input->getArgument('destination');
+    public function invoke(FileBrowser $fileBrowser, $destination = null) {
         if ($destination) {
-            $destination = $this->fileBrowser->getFileSystem()->getFile($destination);
+            $destination = $fileBrowser->getFileSystem()->getFile($destination);
             if (!$destination->exists()) {
                 $destination->create();
             }
         } else {
-            $destination = $this->fileBrowser->getPublicDirectory();
+            $destination = $fileBrowser->getPublicDirectory();
         }
 
         $this->output->writeLine($destination->getAbsolutePath());
 
-        $includeDirectories = array_reverse($this->fileBrowser->getIncludeDirectories());
+        $includeDirectories = array_reverse($fileBrowser->getIncludeDirectories());
         foreach ($includeDirectories as $includeDirectory) {
             $modulePublic = $includeDirectory->getChild('public');
             if (!$modulePublic->exists()) {

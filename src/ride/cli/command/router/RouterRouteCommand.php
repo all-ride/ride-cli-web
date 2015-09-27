@@ -2,7 +2,8 @@
 
 namespace ride\cli\command\router;
 
-use ride\library\cli\command\AbstractCommand;
+use ride\cli\command\AbstractCommand;
+
 use ride\library\router\Router;
 
 /**
@@ -11,48 +12,39 @@ use ride\library\router\Router;
 class RouterRouteCommand extends AbstractCommand {
 
     /**
-     * Constructs a new route search command
+     * Initializes the command
      * @return null
      */
-    public function __construct() {
-        parent::__construct('router route', 'Routes the provided path');
+    protected function initialize() {
+        $this->setDescription('Routes the provided path');
 
         $this->addArgument('path', 'Path to route', false);
         $this->addArgument('method', 'Method of the request', false);
     }
 
     /**
-     * Sets the router
+     * Invokes the command
      * @param ride\library\router\Router $router
-     */
-    public function setRouter(Router $router) {
-        $this->router = $router;
-    }
-
-    /**
-     * Executes the command
+     * @param string $path
+     * @param string $method
      * @return null
      */
-    public function execute() {
-    	$path = $this->input->getArgument('path', '/');
-    	$method = $this->input->getArgument('method', 'GET');
+    public function invoke(Router $router, $path = '/', $method = 'GET') {
+        $routerResult = $router->route($method, $path);
 
-    	$routerResult = $this->router->route($method, $path);
-
-    	if (!$routerResult->isEmpty()) {
-    		$route = $routerResult->getRoute();
-    		if ($route) {
-    			$this->output->writeLine('200 Ok');
-    			$this->output->writeLine($route);
-    		} else {
-    			$allowedMethods = $routerResult->getAllowedMethods();
-
-    			$this->output->writeLine('405 Method not allowed');
-    			$this->output->writeLine('Allow: ' . implode(', ', $allowedMethods));
-    		}
-    	} else {
-    		$this->output->writeLine('404 Not found');
-    	}
+        if (!$routerResult->isEmpty()) {
+            $route = $routerResult->getRoute();
+            if ($route) {
+                $this->output->writeLine('200 Ok');
+                $this->output->writeLine($route);
+            } else {
+                $allowedMethods = $routerResult->getAllowedMethods();
+                $this->output->writeLine('405 Method not allowed');
+                $this->output->writeLine('Allow: ' . implode(', ', $allowedMethods));
+            }
+        } else {
+            $this->output->writeLine('404 Not found');
+        }
     }
 
 }
