@@ -4,21 +4,19 @@ namespace ride\cli\command\router;
 
 use ride\cli\command\AbstractCommand;
 
-use ride\library\router\Route;
-
-use ride\web\router\io\RouteContainerIO;
+use ride\service\RouterService;
 
 /**
- * Command to register a new route
+ * Command to add a new route
  */
-class RouterRegisterCommand extends AbstractCommand {
+class RouteAddCommand extends AbstractCommand {
 
     /**
      * Initializes the command
      * @return null
      */
     protected function initialize() {
-        $this->setDescription('Register a new route');
+        $this->setDescription('Add a new route');
 
         $this->addArgument('path', 'Path of the route');
         $this->addArgument('controller', 'Class name of the controller');
@@ -29,7 +27,7 @@ class RouterRegisterCommand extends AbstractCommand {
 
     /**
      * Invokes the command
-     * @param ride\web\router\io\RouteContainerIO $routeContainerIO
+     * @param \ride\service\RouterService $routerService
      * @param string $path
      * @param string $controller
      * @param string $action
@@ -37,19 +35,16 @@ class RouterRegisterCommand extends AbstractCommand {
      * @param string $methods
      * @return null
      */
-    public function invoke(RouteContainerIO $routeContainerIO, $path, $controller, $action = 'indexAction', $id = null, $methods = null) {
+    public function invoke(RouterService $routerService, $path, $controller, $action = 'indexAction', $id = null, $methods = null) {
         $callback = array($controller, $action);
 
         if ($methods) {
             $methods = implode(',', $methods);
         }
 
-        $route = new Route($path, $callback, $id, $methods);
+        $route = $routerService->createRoute($path, $callback, $id, $methods);
 
-        $routeContainer = $routeContainerIO->getRouteContainer();
-        $routeContainer->addRoute($route);
-
-        $routeContainerIO->setRouteContainer($routeContainer);
+        $routerService->setRoute($route);
     }
 
 }

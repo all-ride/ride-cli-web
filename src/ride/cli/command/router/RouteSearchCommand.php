@@ -4,12 +4,12 @@ namespace ride\cli\command\router;
 
 use ride\cli\command\AbstractCommand;
 
-use ride\library\router\Router;
+use ride\service\RouterService;
 
 /**
  * Command to search for routes
  */
-class RouterSearchCommand extends AbstractCommand {
+class RouteSearchCommand extends AbstractCommand {
 
     /**
      * Initializes the command
@@ -23,12 +23,12 @@ class RouterSearchCommand extends AbstractCommand {
 
     /**
      * Invokes the command
-     * @param \ride\library\router\Router $router
+     * @param \ride\service\RouterService $routerService
      * @param string $query
      * @return null
      */
-    public function invoke(Router $router, $query = null) {
-        $routes = $router->getRouteContainer()->getRoutes();
+    public function invoke(RouterService $routerService, $query = null) {
+        $routes = $routerService->getRoutes();
 
         if ($query) {
             foreach ($routes as $id => $route) {

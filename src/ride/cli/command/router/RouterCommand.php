@@ -4,12 +4,12 @@ namespace ride\cli\command\router;
 
 use ride\cli\command\AbstractCommand;
 
-use ride\library\router\Router;
+use ride\service\RouterService;
 
 /**
  * Command to route a path
  */
-class RouterRouteCommand extends AbstractCommand {
+class RouterCommand extends AbstractCommand {
 
     /**
      * Initializes the command
@@ -24,13 +24,13 @@ class RouterRouteCommand extends AbstractCommand {
 
     /**
      * Invokes the command
-     * @param ride\library\router\Router $router
+     * @param \ride\service\RouterService $routerService
      * @param string $path
      * @param string $method
      * @return null
      */
-    public function invoke(Router $router, $path = '/', $method = 'GET') {
-        $routerResult = $router->route($method, $path);
+    public function invoke(RouterService $routerService, $path = '/', $method = 'GET') {
+        $routerResult = $routerService->route($method, $path);
 
         if (!$routerResult->isEmpty()) {
             $route = $routerResult->getRoute();
