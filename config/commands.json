@@ -6,24 +6,39 @@
             "class": "ride\\cli\\command\\AssetsDeployCommand"
         },
         {
-            "name": "router",
+            "name": "alias",
+            "aliases": "a",
+            "class": "ride\\cli\\command\\router\\AliasSearchCommand"
+        },
+        {
+            "name": "alias set",
+            "aliases": "as",
+            "class": "ride\\cli\\command\\router\\AliasAddCommand"
+        },
+        {
+            "name": "alias unset",
+            "aliases": "au",
+            "class": "ride\\cli\\command\\router\\AliasRemoveCommand"
+        },
+        {
+            "name": "route",
             "aliases": "r",
-            "class": "ride\\cli\\command\\router\\RouterSearchCommand"
+            "class": "ride\\cli\\command\\router\\RouteSearchCommand"
         },
         {
-            "name": "router add",
-            "aliases": "ra",
-            "class": "ride\\cli\\command\\router\\RouterRegisterCommand"
+            "name": "route set",
+            "aliases": "rs",
+            "class": "ride\\cli\\command\\router\\RouteAddCommand"
         },
         {
-            "name": "router delete",
-            "aliases": "rd",
-            "class": "ride\\cli\\command\\router\\RouterUnregisterCommand"
+            "name": "route unset",
+            "aliases": "ru",
+            "class": "ride\\cli\\command\\router\\RouteRemoveCommand"
         },
         {
-            "name": "router route",
+            "name": "router",
             "aliases": "rr",
-            "class": "ride\\cli\\command\\router\\RouterRouteCommand"
+            "class": "ride\\cli\\command\\router\\RouterCommand"
         },
         {
             "name": "session clean",
