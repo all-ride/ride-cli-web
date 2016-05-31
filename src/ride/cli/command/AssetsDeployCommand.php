@@ -17,6 +17,7 @@ class AssetsDeployCommand extends AbstractCommand {
         $this->setDescription('Deploys all public files from the modules');
 
         $this->addArgument('destination', 'Path of the destination, defaults to the actual public directory', false);
+        $this->addFlag('watch', 'Time to sleep in seconds before checking again');
     }
 
     /**
@@ -25,7 +26,7 @@ class AssetsDeployCommand extends AbstractCommand {
      * @param string $destination
      * @return null
      */
-    public function invoke(FileBrowser $fileBrowser, $destination = null) {
+    public function invoke(FileBrowser $fileBrowser, $destination = null, $watch = 0) {
         if ($destination) {
             $destination = $fileBrowser->getFileSystem()->getFile($destination);
             if (!$destination->exists()) {
@@ -37,29 +38,42 @@ class AssetsDeployCommand extends AbstractCommand {
 
         $this->output->writeLine($destination->getAbsolutePath());
 
-        $includeDirectories = array_reverse($fileBrowser->getIncludeDirectories());
-        foreach ($includeDirectories as $includeDirectory) {
-            $modulePublic = $includeDirectory->getChild('public');
-            if (!$modulePublic->exists()) {
-                continue;
-            }
-
-            $modulePublicAbsolute = $modulePublic->getAbsolutePath();
-
-            $files = $modulePublic->read(true);
-            foreach ($files as $file) {
-                if ($file->isDirectory()) {
+        do {
+            $includeDirectories = array_reverse($fileBrowser->getIncludeDirectories());
+            foreach ($includeDirectories as $includeDirectory) {
+                $modulePublic = $includeDirectory->getChild('public');
+                if (!$modulePublic->exists()) {
                     continue;
                 }
 
-                $src = str_replace($modulePublicAbsolute . '/', '', $file->getAbsolutePath());
-                $dst = $destination->getChild($src);
+                $modulePublicAbsolute = $modulePublic->getAbsolutePath();
 
-                $this->output->writeLine($src . ' -> ' . $dst);
+                $files = $modulePublic->read(true);
+                foreach ($files as $file) {
+                    if ($file->isDirectory()) {
+                        continue;
+                    }
 
-                $file->copy($dst);
+                    $path = $file->getAbsolutePath();
+                    $modificationTime = $file->getModificationTime();
+
+                    if (isset($history[$path]) && $history[$path] >= $modificationTime) {
+                        continue;
+                    }
+
+                    $history[$path] = $modificationTime;
+
+                    $src = str_replace($modulePublicAbsolute . '/', '', $path);
+                    $dst = $destination->getChild($src);
+
+                    $this->output->writeLine($src . ' -> ' . $dst);
+
+                    $file->copy($dst);
+                }
             }
-        }
+
+            sleep($watch);
+        } while ($watch != 0);
     }
 
 }
