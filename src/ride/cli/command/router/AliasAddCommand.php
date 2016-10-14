@@ -18,7 +18,7 @@ class AliasAddCommand extends AbstractCommand {
     protected function initialize() {
         $this->setDescription('Add a new URL alias');
 
-        $this->addArgument('path', 'Path of the URL');
+        $this->addArgument('path', 'Path of the URL from an existing route, acts as the destination of the alias');
         $this->addArgument('alias', 'Alias for the path');
         $this->addArgument('force', 'Force the alias for the provided path', false);
     }
